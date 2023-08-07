@@ -9,4 +9,4 @@ async def receive_file(wave_file: UploadFile = File(None)):
     else:
         with open(wave_file.filename, "wb") as f:
             f.write(wave_file.file.read())
-        return { "filename" : wave_file.filename }
+            f.close()
