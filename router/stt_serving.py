@@ -19,7 +19,7 @@ def read_sound(sound: UploadFile) -> np.ndarray:
   try:
     sound_data, sr = librosa.load(sound.file, sr=16000)
   except Exception as e:
-    raise HTTPException(status_code=400, detail="파일")
+    raise HTTPException(status_code=400, detail="파일 불러오기 실패")
   return sound_data
 
 @stt_serving_router.post("/convert_sound", response_model=str)
