@@ -71,3 +71,4 @@ websockets==11.0.3
 tokenizers==0.13.3
 tqdm==4.66.1
 transformers==4.31.0
+safetensors==0.3.2
