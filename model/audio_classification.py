@@ -1,8 +1,5 @@
 import torch.nn as nn
 import torch.nn.functional as F
-import torch
-
-DEVICE = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 class SoundClassifier(nn.Module):
     def __init__(self, num_classes):
@@ -27,8 +24,3 @@ class SoundClassifier(nn.Module):
         x = self.fc4(x)
         return x
     
-def get_audio_classification_model():
-    model = SoundClassifier(num_classes=5)
-    model.load_state_dict(torch.load("audio_classification.pt", map_location=DEVICE))
-    model.eval()
-    return model
