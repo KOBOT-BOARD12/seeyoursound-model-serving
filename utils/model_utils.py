@@ -54,12 +54,13 @@ wav_detail = properties["WAV_DETAIL"]
 
 DEVICE = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
-model = SoundClassifier(num_classes=5)
-model.load_state_dict(torch.load("./model/audio_classification.pt", map_location=DEVICE))
-model.eval()
+audio_classification_model = SoundClassifier(num_classes=5)
+audio_classification_model.load_state_dict(torch.load("./model/audio_classification.pt", map_location=DEVICE))
+audio_classification_model.to(DEVICE)
+audio_classification_model.eval()
 
-processor = Wav2Vec2Processor.from_pretrained("slplab/wav2vec2-xls-r-300m_phone-mfa_korean")
-model = Wav2Vec2ForCTC.from_pretrained("slplab/wav2vec2-xls-r-300m_phone-mfa_korean").to(DEVICE)
+keyword_processor = Wav2Vec2Processor.from_pretrained("slplab/wav2vec2-xls-r-300m_phone-mfa_korean")
+keyword_model = Wav2Vec2ForCTC.from_pretrained("slplab/wav2vec2-xls-r-300m_phone-mfa_korean").to(DEVICE)
 
 def get_audio_classification_class(audio_file):
     try: 
@@ -69,10 +70,10 @@ def get_audio_classification_class(audio_file):
             mfccs = mfccs[:, :target_length]
         else:
             mfccs = np.pad(mfccs, ((0, 0), (0, target_length - mfccs.shape[1])), mode='constant')
-        input_tensor = torch.Tensor(mfccs).unsqueeze(0).unsqueeze(1).to(DEVICE)
+        input_tensor = torch.Tensor(mfccs).unsqueeze(0).unsqueeze(0).to(DEVICE)
         inputs = F.interpolate(input_tensor, size=(128, 128)).to(DEVICE)
         with torch.no_grad():
-            outputs_probs = model(inputs)
+            outputs_probs = audio_classification_model(inputs)
             outputs_probs = F.softmax(outputs_probs, dim=1)
             if (outputs_probs < 0.6).any():
                 return
@@ -83,14 +84,14 @@ def get_audio_classification_class(audio_file):
         return -1
 
 def map_to_pred(audio):
-    inputs = processor(audio, sampling_rate=int(wav_detail["sample_rate"]), return_tensors="pt", padding="longest")
+    inputs = keyword_processor(audio, sampling_rate=int(wav_detail["sample_rate"]), return_tensors="pt", padding="longest")
     input_values = inputs.input_values.to(DEVICE)
 
     with torch.no_grad():
-        logits = model(input_values).logits
+        logits = keyword_model(input_values).logits
 
     predicted_ids = torch.argmax(logits, dim=-1)
-    transcription = processor.batch_decode(predicted_ids)
+    transcription = keyword_processor.batch_decode(predicted_ids)
     return transcription 
 
 def calculate_similarity(keyword_ipa, predicted_ipa):
