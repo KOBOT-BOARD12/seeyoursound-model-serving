@@ -3,7 +3,7 @@ import wave
 import librosa
 import configparser as parser
 
-from Audio_Denoising.denoise import AudioDeNoise
+# from Audio_Denoising.denoise import AudioDeNoise
 
 properties = parser.ConfigParser()
 properties.read("config.ini")
@@ -32,4 +32,3 @@ def bytes_to_wav(path, bytes_data, file_name):
 #    bottom_channel_audio, _ = librosa.load(path + "/bottom_channel.wav")
 #
 #    return top_channel_audio, bottom_channel_audio
-

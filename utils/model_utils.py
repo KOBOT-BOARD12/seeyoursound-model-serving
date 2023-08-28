@@ -5,7 +5,6 @@ import Levenshtein
 import numpy as np
 import configparser as parser
 import torch.nn.functional as F
-import python_sppech_features
 import scipy as split
 from scipy import signal
 from transformers import Wav2Vec2ForCTC, Wav2Vec2Processor
@@ -175,18 +174,7 @@ def get_audio_direction(sig, refsig, fs=1):
 
     return direction
 
-denoising_router = APIRouter()
-
-librosa.load = sf.read
-
-def read_file(file_name):
-    sample_file = file_name
-    sample_directory = './src/'
-    sample_path = sample_directory + sample_file
-    y, sr = librosa.load(sample_path)
-    return y, sr
-
-def reduce_noise_mfcc_up(y, sr):
+def reduce_noise_mfcc_up(y, sr = wav_detail["sample_rate"]):
     hop_length = 512
     mfcc = python_speech_features.base.mfcc(y)
     mfcc = python_speech_features.base.logfbank(y)
@@ -217,6 +205,6 @@ def trim_silence(y):
     trimmed_length = librosa.get_duration(y=y_trimmed)
     return y_trimmed, trimmed_length
 
-def output_file(destination ,filename, y, sr, ext=""):
+def output_file(destination ,filename, y, sr = wav_detail["sample_rate"], ext=""):
     destination = destination + filename[:-4] + ext + '.wav'
     sf.write(destination, y, sr)
