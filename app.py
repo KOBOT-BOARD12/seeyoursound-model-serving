@@ -1,19 +1,24 @@
+import json
+import httpx
 import base64
-from fastapi import FastAPI, Request
+import requests
+from fastapi import FastAPI, Request, BackgroundTasks
 from os.path import os, join, dirname
 from dotenv import load_dotenv, find_dotenv
 
 from utils.utils import bytes_to_wav
 from utils.model_utils import get_audio_classification_class, get_keyword_similarity, get_audio_direction
 
+
+import time
+
 dotenv_path = join(dirname(__file__), '.env')
 load_dotenv(find_dotenv())
 
 app = FastAPI()
 
-@app.post("/prediction")
-async def receive_file(audio_data: Request):
-    req = await audio_data.json()
+async def get_model_inference(req):
+    start_time = time.time()
     top_channel, bottom_channel, uid = req["top_channel"], req["bottom_channel"], req["uid"]
     data = {"keyword": "unknown"}
 
@@ -33,9 +38,32 @@ async def receive_file(audio_data: Request):
 
     data["prediction_class"] = str(class_prediction)
 
-    direction = get_audio_direction(bottom_channel_audio, top_channel_audio)
-    data["direction"] = direction
+    sound_speed = 343  # Speed of sound in m/s
+    microphone_distance = 0.16  # Distance between microphones in meters
+    max_tau = microphone_distance / sound_speed
 
-    requests.post(os.getenv("SERVICE_SERVER_URL") + "/get_model_prediction", data=json.dumps(data), headers={"Content-Type": "application/json"})
+    theta = get_audio_direction(bottom_channel_audio, top_channel_audio, fs=16000, max_tau=max_tau)
+    theta=int(theta)
 
-    return
+    if theta > 0:
+        if theta > 45:
+            data["direction"] = "북쪽"
+        else:
+            data["direction"] = "동쪽"
+    else:
+        if theta < -45:
+            data["direction"] = "남쪽"
+        else:
+            data["direction"] = "서쪽"
+    print(data)
+    async with httpx.AsyncClient() as client:
+        response = await client.post(os.getenv("SERVICE_SERVER_URL") + "/get_model_prediction", json=data)
+    print("time", time.time() - start_time)
+
+@app.post("/prediction")
+async def return_prediction(audio_data: Request, background_tasks: BackgroundTasks):
+    req = await audio_data.json()
+
+    background_tasks.add_task(get_model_inference, req)
+
+    return {"message": "Prediction request received."}

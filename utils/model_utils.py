@@ -46,6 +46,7 @@ MFA2IPA = {
     'NG': 'ŋ',
     'L':'ɫ',
     'p':'p',
+    'k': 'k'
 }
 
 properties = parser.ConfigParser()
@@ -75,8 +76,10 @@ def get_audio_classification_class(audio_file):
         with torch.no_grad():
             outputs_probs = audio_classification_model(inputs)
             outputs_probs = F.softmax(outputs_probs, dim=1)
-            if (outputs_probs < 0.6).any():
-                return
+            # TODO: check probs
+            # max_value, max_index = outputs_probs.max(dim=1)
+            # max_value = max_value.item()
+            # print("max_value", max_value)
             predicted_class_idx = torch.argmax(outputs_probs, dim=1).item()
             return predicted_class_idx
     except Exception as e:
@@ -129,44 +132,63 @@ def get_keyword_similarity(uid, audio_file):
                 max_similarity = similarity
                 max_similarity_keyword = keywords[i]
         return max_similarity_keyword
-    
-def get_audio_direction(sig, refsig, fs=1):
-    '''
-    This function computes the offset between the signal sig and the reference signal refsig
-    using the Generalized Cross Correlation - Phase Transform (GCC-PHAT)method.
-    '''
-    direction = ""
-    interp = 16
-    sound_speed = 343
-    microphone_distance = 0.16
-    max_tau = microphone_distance / sound_speed
+
+def get_audio_direction(sig, refsig, fs=1, max_tau=None, interp=16):
     n = sig.shape[0] + refsig.shape[0]
-    SIG = np.fft.rfft(sig, n=n)
+    SIG = np.fft.rfft(sig, n=n)  
     REFSIG = np.fft.rfft(refsig, n=n)
     R = SIG * np.conj(REFSIG)
-
     cc = np.fft.irfft(R / np.abs(R), n=(interp * n))
-
     max_shift = int(interp * n / 2)
-    if max_tau:
+    if max_tau:    
         max_shift = np.minimum(int(interp * fs * max_tau), max_shift)
-
     cc = np.concatenate((cc[-max_shift:], cc[:max_shift+1]))
-
     shift = np.argmax(np.abs(cc)) - max_shift
-
     tau = shift / float(interp * fs)
-    theta = int(math.asin(tau / max_tau) * 180 / math.pi)
 
-    if theta > 0:
-        if theta > 45:
-            direction = "북쪽"
-        else:
-            direction = "동쪽"
-    else:
-        if theta < -45:
-            direction = "남쪽"
-        else:
-            direction = "서쪽"
 
-    return direction
+    theta = math.asin(tau / max_tau) * 180 / math.pi
+    return theta
+    
+
+
+# def get_audio_direction(sig, refsig, fs=1):
+#     '''
+#     This function computes the offset between the signal sig and the reference signal refsig
+#     using the Generalized Cross Correlation - Phase Transform (GCC-PHAT)method.
+#     '''
+#     direction = ""
+#     interp = 16
+#     sound_speed = 343
+#     microphone_distance = 0.16
+#     max_tau = microphone_distance / sound_speed
+#     n = sig.shape[0] + refsig.shape[0]
+#     SIG = np.fft.rfft(sig, n=n)
+#     REFSIG = np.fft.rfft(refsig, n=n)
+#     R = SIG * np.conj(REFSIG)
+
+#     cc = np.fft.irfft(R / np.abs(R), n=(interp * n))
+
+#     max_shift = int(interp * n / 2)
+#     if max_tau:
+#         max_shift = np.minimum(int(interp * fs * max_tau), max_shift)
+
+#     cc = np.concatenate((cc[-max_shift:], cc[:max_shift+1]))
+
+#     shift = np.argmax(np.abs(cc)) - max_shift
+
+#     tau = shift / float(interp * fs)
+#     theta = int(math.asin(tau / max_tau) * 180 / math.pi)
+
+#     if theta > 0:
+#         if theta > 45:
+#             direction = "북쪽"
+#         else:
+#             direction = "동쪽"
+#     else:
+#         if theta < -45:
+#             direction = "남쪽"
+#         else:
+#             direction = "서쪽"
+
+#     return direction
