@@ -5,6 +5,7 @@ from dotenv import load_dotenv, find_dotenv
 
 from utils.utils import bytes_to_wav
 from utils.model_utils import get_audio_classification_class, get_keyword_similarity, get_audio_direction
+from utils.model_utils import read_file, reduce_noise_mfcc_up, trim_silence, output_file
 
 dotenv_path = join(dirname(__file__), '.env')
 load_dotenv(find_dotenv())
@@ -22,6 +23,13 @@ async def receive_file(audio_data: Request):
     bottom_channel_audio = bytes_to_wav(uid, bottom_channel_data, "bottom_channel.wav")
 
     # top_channel_audio, bottom_channel_audio_ = denoise_wav(uid)
+    file = [top_channel_audio, bottom_channel_audio]
+    for filename in file:
+        y, sr = read_file(file)
+        y_reduced_mfcc_up = reduce_noise_mfcc_up(y, sr)
+        y_reduced_mfcc_up, time_trimmed = trim_silence(y_reduced_mfcc_up)
+        output_file('./src/', file, y_reduced_mfcc_up, sr, '_mfcc_up')
+
 
     class_prediction = get_audio_classification_class(top_channel_audio)
 

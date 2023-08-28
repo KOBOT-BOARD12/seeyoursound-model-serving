@@ -22,15 +22,14 @@ def bytes_to_wav(path, bytes_data, file_name):
     audio_data, _ = librosa.load(file_path)
     return audio_data
 
-def denoise_wav(path):
-    audio = AudioDeNoise(path + "/top_channel.wav")
-    audio.deNoise(path + "/top_channel.wav")
-    audio = AudioDeNoise(path + "/bottom_channel.wav")
-    audio.deNoise(path + "/bottom_channel.wav")
+# def denoise_wav(path):
+#    audio = AudioDeNoise(path + "/top_channel.wav")
+#    audio.deNoise(path + "/top_channel.wav")
+#    audio = AudioDeNoise(path + "/bottom_channel.wav")
+#    audio.deNoise(path + "/bottom_channel.wav")
+#
+#    top_channel_audio, _ = librosa.load(path + "/top_channel.wav")
+#    bottom_channel_audio, _ = librosa.load(path + "/bottom_channel.wav")
+#
+#    return top_channel_audio, bottom_channel_audio
 
-    top_channel_audio, _ = librosa.load(path + "/top_channel.wav")
-    bottom_channel_audio, _ = librosa.load(path + "/bottom_channel.wav")
-
-    return top_channel_audio, bottom_channel_audio
-
-    
