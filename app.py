@@ -3,9 +3,8 @@ from fastapi import FastAPI, Request
 from os.path import os, join, dirname
 from dotenv import load_dotenv, find_dotenv
 
-from utils.utils import bytes_to_wav
+from utils.utils import bytes_to_wav, reduce_noise_mfcc_up
 from utils.model_utils import get_audio_classification_class, get_keyword_similarity, get_audio_direction
-from utils.model_utils import reduce_noise_mfcc_up, trim_silence, output_file
 
 dotenv_path = join(dirname(__file__), '.env')
 load_dotenv(find_dotenv())
@@ -22,15 +21,8 @@ async def receive_file(audio_data: Request):
     top_channel_audio = bytes_to_wav(uid, top_channel_data, "top_channel.wav")
     bottom_channel_audio = bytes_to_wav(uid, bottom_channel_data, "bottom_channel.wav")
 
-    # top_channel_audio, bottom_channel_audio_ = denoise_wav(uid)
-    file = [top_channel_audio, bottom_channel_audio]
-    for filename in file:
-        sr = wav_detail["sample_rate"]
-        bytes_to_wav("./src/", bytes_data, filename)
-        y_reduced_mfcc_up = reduce_noise_mfcc_up(y, sr)
-        y_reduced_mfcc_up, time_trimmed = trim_silence(y_reduced_mfcc_up)
-        output_file('./src/', file, y_reduced_mfcc_up, sr, '_mfcc_up')
-
+    top_channel_audio = reduce_noise_mfcc_up(uid + "/top_channel.wav")
+    bottom_channel_audio = reduce_noise_mfcc_up(uid + "/bottom_channel.wav")
 
     class_prediction = get_audio_classification_class(top_channel_audio)
 

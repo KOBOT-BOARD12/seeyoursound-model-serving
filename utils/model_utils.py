@@ -5,10 +5,7 @@ import Levenshtein
 import numpy as np
 import configparser as parser
 import torch.nn.functional as F
-import scipy as split
-from scipy import signal
 from transformers import Wav2Vec2ForCTC, Wav2Vec2Processor
-from pysndfx import AudioEffectsChain
 
 from manager.firebase_manager import db
 from model.audio_classification import SoundClassifier
@@ -173,38 +170,3 @@ def get_audio_direction(sig, refsig, fs=1):
             direction = "서쪽"
 
     return direction
-
-def reduce_noise_mfcc_up(y, sr = wav_detail["sample_rate"]):
-    hop_length = 512
-    mfcc = python_speech_features.base.mfcc(y)
-    mfcc = python_speech_features.base.logfbank(y)
-    mfcc = python_speech_features.base.lifter(mfcc)
-
-    sum_of_squares = []
-    index = -1
-    for r in mfcc:
-        sum_of_squares.append(0)
-        index = index + 1
-        for n in r:
-            sum_of_squares[index] = sum_of_squares[index] + n**2
-
-    strongest_frame = sum_of_squares.index(max(sum_of_squares))
-    hz = python_speech_features.base.mel2hz(mfcc[strongest_frame])
-
-    max_hz = max(hz)
-    min_hz = min(hz)
-
-    speech_booster = AudioEffectsChain().lowshelf(frequency=min_hz*(-1), gain=12.0, slope=0.5)
-    y_speach_boosted = speech_booster(y)
-
-    return (y_speach_boosted)
-
-
-def trim_silence(y):
-    y_trimmed, index = librosa.effects.trim(y, top_db=20, frame_length=2, hop_length=500)
-    trimmed_length = librosa.get_duration(y=y_trimmed)
-    return y_trimmed, trimmed_length
-
-def output_file(destination ,filename, y, sr = wav_detail["sample_rate"], ext=""):
-    destination = destination + filename[:-4] + ext + '.wav'
-    sf.write(destination, y, sr)
