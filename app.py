@@ -6,7 +6,7 @@ from fastapi import FastAPI, Request, BackgroundTasks
 from os.path import os, join, dirname
 from dotenv import load_dotenv, find_dotenv
 
-from utils.utils import bytes_to_wav
+from utils.utils import bytes_to_wav, reduce_noise_mfcc_up
 from utils.model_utils import get_audio_classification_class, get_keyword_similarity, get_audio_direction
 
 
@@ -26,7 +26,8 @@ async def get_model_inference(req):
     top_channel_audio = bytes_to_wav(uid, top_channel_data, "top_channel.wav")
     bottom_channel_audio = bytes_to_wav(uid, bottom_channel_data, "bottom_channel.wav")
 
-    # top_channel_audio, bottom_channel_audio_ = denoise_wav(uid)
+    top_channel_audio = reduce_noise_mfcc_up(uid + "/top_channel.wav")
+    bottom_channel_audio = reduce_noise_mfcc_up(uid + "/bottom_channel.wav")
 
     class_prediction = get_audio_classification_class(top_channel_audio)
 
