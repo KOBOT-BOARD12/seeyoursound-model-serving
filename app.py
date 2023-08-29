@@ -10,15 +10,12 @@ from utils.utils import bytes_to_wav, reduce_noise_mfcc_up
 from utils.model_utils import get_audio_classification_class, get_keyword_similarity, get_audio_direction
 
 
-import time
-
 dotenv_path = join(dirname(__file__), '.env')
 load_dotenv(find_dotenv())
 
 app = FastAPI()
 
 async def get_model_inference(req):
-    start_time = time.time()
     top_channel, bottom_channel, uid = req["top_channel"], req["bottom_channel"], req["uid"]
     data = {"keyword": "unknown"}
 
@@ -56,10 +53,9 @@ async def get_model_inference(req):
             data["direction"] = "남쪽"
         else:
             data["direction"] = "서쪽"
-    print(data)
+
     async with httpx.AsyncClient() as client:
         response = await client.post(os.getenv("SERVICE_SERVER_URL") + "/get_model_prediction", json=data)
-    print("time", time.time() - start_time)
 
 @app.post("/prediction")
 async def return_prediction(audio_data: Request, background_tasks: BackgroundTasks):
