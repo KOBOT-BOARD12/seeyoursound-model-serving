@@ -21,7 +21,7 @@ def bytes_to_wav(path, bytes_data, file_name):
     wf.close()
 
 def reduce_noise_mfcc_up(path):
-    y, sr = librosa.load(path)
+    y, sr = librosa.load(path, sr=int(wav_detail["sample_rate"]))
 
     mfcc = python_speech_features.base.mfcc(y)
     mfcc = python_speech_features.base.logfbank(y)
