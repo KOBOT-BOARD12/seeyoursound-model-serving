@@ -7,8 +7,7 @@ from os.path import os, join, dirname
 from dotenv import load_dotenv, find_dotenv
 
 from utils.utils import bytes_to_wav, reduce_noise_mfcc_up
-from utils.model_utils import get_audio_classification_class, get_keyword_similarity, get_audio_direction
-
+from utils.model_utils import get_audio_classification_class, get_keyword_similarity, get_audio_direction, get_oscvm_result
 
 dotenv_path = join(dirname(__file__), '.env')
 load_dotenv(find_dotenv())
@@ -26,9 +25,14 @@ async def get_model_inference(req):
     top_channel_audio = reduce_noise_mfcc_up(uid + "/top_channel.wav")
     bottom_channel_audio = reduce_noise_mfcc_up(uid + "/bottom_channel.wav")
 
+    oscvm_prediction = get_oscvm_result(top_channel_audio)
+
+    if top_channel_audio == -1:
+        return
+
     class_prediction = get_audio_classification_class(top_channel_audio)
 
-    if class_prediction == None or class_prediction == -1:
+    if class_prediction == -1:
         return
     elif class_prediction == 4:
         keyword_prediction = get_keyword_similarity(uid, top_channel_audio)

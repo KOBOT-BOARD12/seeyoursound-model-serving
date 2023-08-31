@@ -3,10 +3,10 @@ import torch
 import librosa
 import Levenshtein
 import numpy as np
+import joblib
 import configparser as parser
 import torch.nn.functional as F
-from transformers import Wav2Vec2ForCTC, Wav2Vec2Processor
-
+from transformers import Wav2Vec2ForCTC, Wav2Vec2Processor, AutoFeatureExtractor, ASTModel
 from manager.firebase_manager import db
 from model.audio_classification import SoundClassifier
 
@@ -65,6 +65,13 @@ audio_classification_model.eval()
 
 keyword_processor = Wav2Vec2Processor.from_pretrained("slplab/wav2vec2-xls-r-300m_phone-mfa_korean")
 keyword_model = Wav2Vec2ForCTC.from_pretrained("slplab/wav2vec2-xls-r-300m_phone-mfa_korean").to(DEVICE)
+
+feature_extractor = AutoFeatureExtractor.from_pretrained("bookbot/distil-ast-audioset")
+model = ASTModel.from_pretrained("bookbot/distil-ast-audioset").to(DEVICE)
+
+scaler = joblib.load('./model/robustscaler_AST.pkl')
+pca = joblib.load('./model/pca_AST.pkl')
+ocsvm = joblib.load('./model/ocsvm_AST.pkl')
 
 def get_audio_classification_class(audio_file):
     try: 
@@ -147,4 +154,13 @@ def get_audio_direction(sig, refsig, fs=1, max_tau=None, interp=16):
 
     theta = math.asin(tau / max_tau) * 180 / math.pi
     return theta
- 
+
+def get_oscvm_result(y):
+    input_tensor = feature_extractor(y, sampling_rate=int(wav_detail["sample_rate"]), return_tensors="pt")
+    with torch.no_grad():
+        feature = model(**input_tensor.to(DEVICE)).last_hidden_state.detach()
+        feature = feature.cpu().numpy().reshape(1, -1)
+        feature = scaler.transform(feature)
+        feature = pca.transform(feature)
+        pred = ocsvm.predict(feature)
+    return pred
