@@ -17,6 +17,8 @@ app = FastAPI()
 
 async def get_model_inference(req):
     top_channel, bottom_channel, uid = req["top_channel"], req["bottom_channel"], req["uid"]
+    filtered_class = req["filtered_class"]
+
     data = {"keyword": "unknown"}
 
     top_channel_data, bottom_channel_data = bytes(base64.b64decode(top_channel.encode('utf-8'))), bytes(base64.b64decode(bottom_channel.encode('utf-8')))
@@ -28,7 +30,10 @@ async def get_model_inference(req):
 
     class_prediction = get_audio_classification_class(top_channel_audio)
 
-    if class_prediction == None or class_prediction == -1:
+    if class_prediction != -1 and filtered_class[class_prediction] == False:
+        return
+
+    if class_prediction == -1:
         return
     elif class_prediction == 4:
         keyword_prediction = get_keyword_similarity(uid, top_channel_audio)
