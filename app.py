@@ -1,5 +1,4 @@
 import json
-import httpx
 import base64
 import requests
 from fastapi import FastAPI, Request, BackgroundTasks
@@ -17,6 +16,7 @@ app = FastAPI()
 async def get_model_inference(req):
     top_channel, bottom_channel, uid = req["top_channel"], req["bottom_channel"], req["uid"]
     filtered_class = req["filtered_class"]
+    websocket = req["websocket"]
 
     data = {"keyword": "unknown"}
 
@@ -62,9 +62,13 @@ async def get_model_inference(req):
             data["direction"] = "남쪽"
         else:
             data["direction"] = "서쪽"
-
-    async with httpx.AsyncClient() as client:
-        response = await client.post(os.getenv("SERVICE_SERVER_URL") + "/get_model_prediction", json=data)
+    try:
+        if websocket:
+            await websocket.send_text(data)
+        else:
+            print("websocket not found")
+    except Exception as e:
+        print('Error occur in sending to client : ', e)
 
 @app.post("/prediction")
 async def return_prediction(audio_data: Request, background_tasks: BackgroundTasks):
