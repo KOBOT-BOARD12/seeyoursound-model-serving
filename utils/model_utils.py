@@ -58,7 +58,7 @@ wav_detail = properties["WAV_DETAIL"]
 
 DEVICE = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
-audio_classification_model = SoundClassifier(num_classes=5)
+audio_classification_model = SoundClassifier(num_classes=6)
 audio_classification_model.load_state_dict(torch.load("./model/audio_classification.pt", map_location=DEVICE))
 audio_classification_model.to(DEVICE)
 audio_classification_model.eval()
@@ -105,22 +105,24 @@ def map_to_pred(audio):
 
 def calculate_similarity(keyword_ipa, predicted_ipa):
     distance = 0
+    padding_length = 15
     keyword_length = len(keyword_ipa)
     prediction_length = len(predicted_ipa)
 
     if keyword_length >= prediction_length:
-        padded_keyword_ipa = keyword_ipa+'0' * (15 - keyword_length) if keyword_length < 15 else keyword_ipa
-        padded_predicted_ipa = predicted_ipa + '0' * (15 - prediction_length) if prediction_length < 15 else predicted_ipa
+        padded_keyword_ipa = keyword_ipa+'0' * (padding_length - keyword_length) if keyword_length < padding_length else keyword_ipa
+        padded_predicted_ipa = predicted_ipa + '0' * (padding_length - prediction_length) if prediction_length < padding_length else predicted_ipa
         distance = Levenshtein.ratio(padded_keyword_ipa, padded_predicted_ipa)
     else:
         for window in range(len(predicted_ipa) - keyword_length):
-            padded_keyword_ipa = keyword_ipa + '0' * (15 - keyword_length) if keyword_length < 15 else keyword_ipa
-            padded_predicted_ipa = predicted_ipa[window : window + keyword_length + 1] + '0' * (15 - keyword_length + 1) if keyword_length + 1 < 15 else predicted_ipa[window : window + keyword_length + 1]
+            padded_keyword_ipa = keyword_ipa + '0' * (padding_length - keyword_length) if keyword_length < padding_length else keyword_ipa
+            padded_predicted_ipa = predicted_ipa[window : window + keyword_length + 1] + '0' * (padding_length - keyword_length + 1) if keyword_length + 1 < padding_length else predicted_ipa[window : window + keyword_length + 1]
             distance = max(distance, Levenshtein.ratio(padded_keyword_ipa, padded_predicted_ipa))
     
     return distance
 
 def get_keyword_similarity(uid, audio_file):
+    flag = 0
     uid_ref = db.collection("Users").document(uid)
     doc = uid_ref.get()
     if doc.exists:
@@ -130,14 +132,20 @@ def get_keyword_similarity(uid, audio_file):
         ipa_keywords = list(existing_keywords.values())
         keywords = list(existing_keywords.keys())
         result = map_to_pred([audio_file])
-        model_output_ipa = ''.join([MFA2IPA[mfa] for mfa in result[0].split(' ')])
-        for i in range(len(ipa_keywords)):
-            ipa_of_keyword = ipa_keywords[i]
-            similarity = calculate_similarity(ipa_of_keyword, model_output_ipa)
-            if max_similarity < similarity:
-                max_similarity = similarity
-                max_similarity_keyword = keywords[i]
-        return max_similarity_keyword
+        try:
+            model_output_ipa = ''.join([MFA2IPA[mfa] for mfa in result[0].split(' ')])
+            for i in range(len(ipa_keywords)):
+                ipa_of_keyword = ipa_keywords[i]
+                similarity = calculate_similarity(ipa_of_keyword, model_output_ipa)
+                if max_similarity < similarity:
+                    max_similarity = similarity
+                    max_similarity_keyword = keywords[i]
+        except KeyError as e:
+            print('Error occur in MFA2IPA : ', e)
+        if max_similarity >= 0.8:
+            flag = 1
+
+        return max_similarity_keyword, flag
 
 def get_audio_direction(sig, refsig, fs=1, max_tau=None, interp=16):
     n = sig.shape[0] + refsig.shape[0]
