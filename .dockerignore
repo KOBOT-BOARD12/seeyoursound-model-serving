@@ -1,1 +1,8 @@
-.idea.git.gitignore.dockerignoreDockerfile*.md.venv
+.idea
+.git
+.gitignore
+.dockerignore
+Dockerfile
+Dockerfile-base
+*.md
+.venv
