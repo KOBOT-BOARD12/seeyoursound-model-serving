@@ -29,18 +29,20 @@ async def get_model_inference(req):
 
     oscvm_prediction = get_oscvm_result(top_channel_audio)
 
-    if top_channel_audio == -1:
+    if oscvm_prediction == -1:
         return
 
     class_prediction = get_audio_classification_class(top_channel_audio)
 
-    if class_prediction != -1 and filtered_class[class_prediction] == False:
+    if class_prediction != -1 and (not filtered_class[class_prediction]):
         return
 
-    if class_prediction == -1:
+    if class_prediction == -1 or class_prediction == 5:
         return
     elif class_prediction == 4:
-        keyword_prediction = get_keyword_similarity(uid, top_channel_audio)
+        keyword_prediction, flag = get_keyword_similarity(uid, top_channel_audio)
+        if flag == 0: 
+            return
         data["keyword"] = keyword_prediction
 
     data["prediction_class"] = str(class_prediction)
