@@ -17,8 +17,9 @@ app = FastAPI()
 async def get_model_inference(req):
     top_channel, bottom_channel, uid = req["top_channel"], req["bottom_channel"], req["uid"]
     filtered_class = req["filtered_class"]
+    websocket_idx = req["websocket_idx"]
 
-    data = {"keyword": "unknown"}
+    data = {"keyword": "unknown", "websocket_idx": websocket_idx}
 
     top_channel_data, bottom_channel_data = bytes(base64.b64decode(top_channel.encode('utf-8'))), bytes(base64.b64decode(bottom_channel.encode('utf-8')))
     top_channel_audio = bytes_to_wav(uid, top_channel_data, "top_channel.wav")
