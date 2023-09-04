@@ -172,6 +172,8 @@ def get_keyword_similarity(uid, audio_file):
         max_similarity = 0
         max_similarity_keyword = ""
         existing_keywords = doc.to_dict().get("keywords", [])
+        if not bool(existing_keywords):
+            return max_similarity_keyword, flag
         ipa_keywords = list(existing_keywords.values())
         keywords = list(existing_keywords.keys())
         result = map_to_pred([audio_file])
