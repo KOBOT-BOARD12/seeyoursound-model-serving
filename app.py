@@ -82,7 +82,7 @@ async def get_model_inference(req):
 
     async with httpx.AsyncClient() as client:
         response = await client.post(
-            os.getenv("SERVICE_SERVER_URL") + "/get_model_prediction", json=data
+            os.getenv("CENTRAL_SERVER_URL") + "/get_model_prediction", json=data
         )
 
 
