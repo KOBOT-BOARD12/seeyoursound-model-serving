@@ -60,25 +60,8 @@ async def get_model_inference(req):
 
     data["prediction_class"] = str(class_prediction)
 
-    sound_speed = 343  # Speed of sound in m/s
-    microphone_distance = 0.16  # Distance between microphones in meters
-    max_tau = microphone_distance / sound_speed
-
-    theta = get_audio_direction(
-        bottom_channel_audio, top_channel_audio, fs=16000, max_tau=max_tau
-    )
-    theta = int(theta)
-
-    if theta > 0:
-        if theta > 45:
-            data["direction"] = "북쪽"
-        else:
-            data["direction"] = "동쪽"
-    else:
-        if theta < -45:
-            data["direction"] = "남쪽"
-        else:
-            data["direction"] = "서쪽"
+    direction = get_audio_direction(bottom_channel_audio, top_channel_audio)
+    data["direction"] = direction
 
     async with httpx.AsyncClient() as client:
         response = await client.post(
