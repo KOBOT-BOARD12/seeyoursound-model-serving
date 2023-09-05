@@ -14,6 +14,7 @@ from transformers import (
 )
 from manager.firebase_manager import db
 from model.audio_classification import SoundClassifier
+from model.audio_direction import SoundDirection
 
 MFA2IPA = {
     "A": "ɐ",
@@ -84,6 +85,13 @@ scaler = joblib.load("./model/robustscaler_AST.pkl")
 pca = joblib.load("./model/pca_AST.pkl")
 ocsvm = joblib.load("./model/ocsvm_AST.pkl")
 
+audio_direction_model = SoundDirection()
+audio_direction_model.load_state_dict(
+    torch.load("./model/audio_direction.pt", map_location=DEVICE)
+)
+audio_direction_model.to(DEVICE)
+audio_direction_model.eval()
+
 
 def get_audio_classification_class(audio_file):
     try:
@@ -99,7 +107,7 @@ def get_audio_classification_class(audio_file):
             )
         input_tensor = torch.Tensor(mfccs).unsqueeze(0).unsqueeze(0).to(DEVICE)
         inputs = F.interpolate(input_tensor, size=(128, 128)).to(DEVICE)
-        with torch.no_grad():
+        with torch.inference_mode():
             outputs_probs = audio_classification_model(inputs)
             outputs_probs = F.softmax(outputs_probs, dim=1)
             predicted_class_idx = torch.argmax(outputs_probs, dim=1).item()
@@ -118,7 +126,7 @@ def map_to_pred(audio):
     )
     input_values = inputs.input_values.to(DEVICE)
 
-    with torch.no_grad():
+    with torch.inference_mode():
         logits = keyword_model(input_values).logits
 
     predicted_ids = torch.argmax(logits, dim=-1)
@@ -193,31 +201,42 @@ def get_keyword_similarity(uid, audio_file):
         return max_similarity_keyword, flag
 
 
-def get_audio_direction(sig, refsig, fs=1, max_tau=None, interp=16):
-    n = sig.shape[0] + refsig.shape[0]
-    SIG = np.fft.rfft(sig, n=n)
-    REFSIG = np.fft.rfft(refsig, n=n)
-    R = SIG * np.conj(REFSIG)
-    cc = np.fft.irfft(R / np.abs(R), n=(interp * n))
-    max_shift = int(interp * n / 2)
-    if max_tau:
-        max_shift = np.minimum(int(interp * fs * max_tau), max_shift)
-    cc = np.concatenate((cc[-max_shift:], cc[: max_shift + 1]))
-    shift = np.argmax(np.abs(cc)) - max_shift
-    tau = shift / float(interp * fs)
-
-    theta = math.asin(tau / max_tau) * 180 / math.pi
-    return theta
-
-
 def get_oscvm_result(y):
     input_tensor = feature_extractor(
         y, sampling_rate=int(wav_detail["sample_rate"]), return_tensors="pt"
     )
-    with torch.no_grad():
+    with torch.inference_mode():
         feature = model(**input_tensor.to(DEVICE)).last_hidden_state.detach()
         feature = feature.cpu().numpy().reshape(1, -1)
         feature = scaler.transform(feature)
         feature = pca.transform(feature)
         pred = ocsvm.predict(feature)
     return pred
+
+
+def get_audio_direction(top_channel_audio, bottom_channel_audio):
+    with torch.inference_mode():
+        stft1 = librosa.stft(
+            top_channel_audio, n_fft=512, hop_length=320, win_length=320
+        )
+        stft2 = librosa.stft(
+            bottom_channel_audio, n_fft=512, hop_length=320, win_length=320
+        )
+
+        feature_set1 = torch.tensor(
+            np.concatenate((stft1.real, stft2.real), axis=0)
+        ).to(DEVICE)
+        feature_set2 = torch.tensor(
+            np.concatenate((stft1.imag, stft2.imag), axis=0)
+        ).to(DEVICE)
+
+        feature = torch.concatenate((feature_set1, feature_set2), axis=0).to(DEVICE)
+
+        feature = feature.unsqueeze(0).unsqueeze(0).to(DEVICE)
+        direction = audio_direction_model(feature).argmax(dim=1).item()
+    if direction == 0:
+        return "서쪽"
+    elif direction == 1:
+        return "남쪽"
+    elif direction == 2:
+        return "북쪽"
