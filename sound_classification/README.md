@@ -12,7 +12,7 @@ Cuda 11.4
 ### 3. 파일 구조
 #### [data_rename.ipynb](https://github.com/KOBOT-BOARD12/seeyoursound-model-serving/blob/sound-classification/sound_classification/data_rename.ipynb)
  ```python
-rename_wav_files(directory_path) :
+def rename_wav_files(directory_path):
  ```
 #### 모델 학습을 위해 파일명을 재설정해주는 함수이다. parameter로는 파일의 경로를 설정해주면 된다.
 ---
