@@ -3,7 +3,10 @@
 #### 사람의 말이라 추정된 음성을 받아와 음성의 발음이 키워드와 유사한지 추정한다.
 ---
 ### 2. 개발 환경
-#### 국민대학교에서 제공하는 Graphic Card가 탑재된 딥러닝 프라이빗 클라우드에서 개발을 진행하였다. Jupyter Lab 환경 위에서 PyTorch와 Python을 사용하였고, ipynb 확장자로 파일을 commit 하였다.
+Ubuntu 22.04.6  
+Python 3.11.3  
+PyTorch 2.0.1  
+Cuda 12.1
 ---
 ### 3. 파일 구조
 #### [keyword_similarity.ipynb](https://github.com/KOBOT-BOARD12/seeyoursound-model-serving/blob/keyword_similarity/keyword_similarity/keyword_similarity.ipynb)
