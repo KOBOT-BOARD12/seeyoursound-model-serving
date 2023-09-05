@@ -27,28 +27,28 @@ def fit_transform_scaler(train_set, test_set):
 #### [train_ocsvm.ipynb](https://github.com/KOBOT-BOARD12/seeyoursound-model-serving/blob/feature/ocsvm-train-inference/one_class_classification/train_ocsvm.ipynb)
 
  ```python
-def  fit_transform_pca(train_set, test_set):
+def fit_transform_pca(train_set, test_set):
  ```
 #### 추출된 특징의 차원은 매우 높다. 차원의 저주를 방지하기 위해 PCA로 고차원의 특징을 128차원으로 축소한다. 이 경우 모든 축의 **Explained Variance Ratio**의 합은 0.89이다.
 ---
 #### [train_ocsvm.ipynb](https://github.com/KOBOT-BOARD12/seeyoursound-model-serving/blob/feature/ocsvm-train-inference/one_class_classification/train_ocsvm.ipynb)
 
  ```python
-def  param_op(gamma, kernel, nu):
+def param_op(gamma, kernel, nu):
  ```
 #### 부르트 포스로 OCSVM의 하이퍼 파라미터인 gamma, kernel, nu의 최적값을 찾는다. 이리하여 구해진 최적의 하이퍼 파라미터는 kernel: rbf , gamma: 0.0001 , nu: 0.156이다. 성능은 accuracy : 0.94, recall : 0.97, precision : 0.92, F1 Score : 0.95이다.
 ---
 #### [inference_ocsvm.ipynb](https://github.com/KOBOT-BOARD12/seeyoursound-model-serving/blob/feature/ocsvm-train-inference/one_class_classification/train_ocsvm.ipynb)
 
  ```python
-def  model_load(ast_path, scaler_path, pca_path, ocsvm_path):
+def model_load(ast_path, scaler_path, pca_path, ocsvm_path):
  ```
 #### 추론시 사용할 모델, 스케일러, PCA 모델, OCSVM을 로드한다.
 ---
 #### [inference_ocsvm.ipynb](https://github.com/KOBOT-BOARD12/seeyoursound-model-serving/blob/feature/ocsvm-train-inference/one_class_classification/train_ocsvm.ipynb)
 
  ```python
-def  inference(audio, sr=16000):
+def inference(audio, sr=16000):
  ```
 #### 로드된 모델로 추론을 실행한다.
 ---
