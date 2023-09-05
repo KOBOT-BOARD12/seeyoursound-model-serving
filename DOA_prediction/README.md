@@ -65,5 +65,5 @@ def inference(audio):
 
 ### 5. 데이터 수집
 
-음성 분류에 사용된 데이터를 음원으로 하여 갤럭시 노트 8과 갤럭시 S21+로 네 방향에 대해 녹음을 진행했다.  
-[녹음 방법](https://media.discordapp.net/attachments/363994928533078018/1148649346498310314/image.png?width=775&height=581)
+#### 음성 분류에 사용된 데이터를 음원으로 하여 갤럭시 노트 8과 갤럭시 S21+로 네 방향에 대해 녹음을 진행했다.
+<img src="https://i.ibb.co/svG0d5X/recording.jpg" width="50%" height="50%">
