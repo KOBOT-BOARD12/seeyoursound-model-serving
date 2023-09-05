@@ -16,11 +16,11 @@ a. [Manager](https://github.com/KOBOT-BOARD12/seeyoursound-model-serving/blob/de
 
 b. [Utils](https://github.com/KOBOT-BOARD12/seeyoursound-model-serving/tree/develop/utils): 오디오 파일 생성, 오디오 디노이징, 모델 추론 등을 진행한다.
 
-c. [Sound Classification](https://github.com/KOBOT-BOARD12/seeyoursound-model-serving/tree/develop/sound_classification): Sound Classification에 사용된 학습 데이터 정보, 모델 학습 코드가 포함되어 있다.
+c. [Sound Classification](https://github.com/KOBOT-BOARD12/seeyoursound-model-serving/tree/develop/sound_classification): Sound Classification에서 사용된 학습 데이터 정보, 모델 학습 코드가 포함되어 있다.
 
-d. [TODO](https://github.com/KOBOT-BOARD12/seeyoursound-model-serving/tree/develop/sound_classification): TODO
+d. [One Class Classification](https://github.com/KOBOT-BOARD12/seeyoursound-model-serving/tree/develop/sound_classification): One Class Classification에서 사용된 학습 데이터 정보, 모델 학습 코드가 포함되어 있다.
 
-e. [TODO](https://github.com/KOBOT-BOARD12/seeyoursound-model-serving/tree/develop/sound_classification): TODO
+e. [Keyword Similarity](https://github.com/KOBOT-BOARD12/seeyoursound-model-serving/tree/develop/keyword_similarity): Keyword Similarity에서 사용된 모델 정보와 추론 코드가 포함되어 있다.
 <br>
 
 ### 4. ENV
