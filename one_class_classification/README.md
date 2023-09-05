@@ -10,7 +10,7 @@
  ```python
 def feature_extraction(data_paths):
  ```
-#### 음성 데이터에서 특징을 추출하는 함수이다. 음성 데이터는 비정형 데이터이므로 많은 음성 데이터를 학습한 모델로 특정한 분포에 매핑된 특징을 추출하여 OCSVM을 학습하여야 한다.
+#### 오디오 데이터에서 특징을 추출하는 함수이다. 오디오 데이터는 비정형 데이터이므로 많은 오디오 데이터를 학습한 모델로 특정한 분포에 매핑된 특징을 추출하여 OCSVM을 학습하여야 한다.
 ---
 #### [train_ocsvm.ipynb](https://github.com/KOBOT-BOARD12/seeyoursound-model-serving/blob/feature/ocsvm-train-inference/one_class_classification/train_ocsvm.ipynb)
 
