@@ -3,12 +3,16 @@
 #### Denoising된 wav 음성 파일을 받아와 음성을 분류하는 서비스 제공한다.
 ---
 ### 2. 개발 환경
-#### Graphic Card가 탑재된 Desktop에서 개발을 진행하였다. Jupyter Notebook 환경 위에서 PyTorch와 Python을 사용하였고, ipynb 확장자로 파일을 commit 하였다.
+Ubuntu 18.04.6  
+Python 3.11.3  
+PyTorch 2.0.1  
+Cuda 11.4
+
 ---
 ### 3. 파일 구조
 #### [data_rename.ipynb](https://github.com/KOBOT-BOARD12/seeyoursound-model-serving/blob/sound-classification/sound_classification/data_rename.ipynb)
  ```python
-rename_wav_files(directory_path) :
+def rename_wav_files(directory_path):
  ```
 #### 모델 학습을 위해 파일명을 재설정해주는 함수이다. parameter로는 파일의 경로를 설정해주면 된다.
 ---
@@ -47,7 +51,3 @@ def train_model(model, dataloader, criterion, optimizer, num_epochs):
 #### [비명 소리](https://zenodo.org/record/4844825#.YNv3h-gzZPY)
 
 #### [대화 소리](https://www.aihub.or.kr/aihubdata/data/view.do?currMenu=115&topMenu=100&aihubDataSe=realm&dataSetSn=568)
-
-
-
-
