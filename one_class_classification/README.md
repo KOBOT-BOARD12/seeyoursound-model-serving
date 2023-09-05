@@ -1,6 +1,6 @@
 # One Class Support Vector Machine
 ### 1. 소리 분류 모델 설명
-#### Denoising된 wav 음성 파일을 받아와 음성이 학습된 클래스에 포함되는지 OCSVM으로 분류하는 서비스 제공한다. 특징 추출은 AudioSet 데이터셋으로 학습된 distil-ast 모델을 활용하였다.
+#### Denoising된 wav 오디오 파일을 받아와 오디오가 학습된 클래스에 포함되는지 OCSVM으로 분류하는 서비스 제공한다. 특징 추출은 AudioSet 데이터셋으로 학습된 distil-ast 모델을 활용하였다.
 ---
 ### 2. 개발 환경
 #### 국민대학교에서 제공하는 Graphic Card가 탑재된 딥러닝 프라이빗 클라우드에서 개발을 진행하였다. Jupyter Lab 환경 위에서 PyTorch와 Python을 사용하였고, ipynb 확장자로 파일을 commit 하였다.
