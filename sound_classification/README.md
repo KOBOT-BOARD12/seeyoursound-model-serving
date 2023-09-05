@@ -29,7 +29,7 @@ def preprocess_and_split_wav(file_path, output_dir, duration=1.0):
  ```python
 class SoundDataset(Dataset):
  ```
-#### 모델 학습을 위한 데이터셋 클래스이다. 소리 분류를 위한 레이블로 자동차 경적, 개 짖는 소리, 사이렌, 비명 소리, 대화 소리를 추가하였다.
+#### 모델 학습을 위한 데이터셋 클래스이다. 소리 분류를 위한 레이블로 자동차 경적, 개 짖는 소리, 사이렌, 비명 소리, 대화 소리, 침묵 소리를 추가하였다.
 ---
 #### [sound_classification.ipynb](https://github.com/KOBOT-BOARD12/seeyoursound-model-serving/blob/sound-classification/sound_classification/sound_classification.ipynb)
 #### 
