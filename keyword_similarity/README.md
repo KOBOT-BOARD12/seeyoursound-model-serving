@@ -7,6 +7,7 @@ Ubuntu 22.04.6
 Python 3.11.3  
 PyTorch 2.0.1  
 Cuda 12.1
+
 ---
 ### 3. 파일 구조
 #### [keyword_similarity.ipynb](https://github.com/KOBOT-BOARD12/seeyoursound-model-serving/blob/keyword_similarity/keyword_similarity/keyword_similarity.ipynb)
