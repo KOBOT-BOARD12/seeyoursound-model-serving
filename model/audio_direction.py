@@ -24,7 +24,7 @@ class SoundDirection(nn.Module):
             nn.Linear(512, 256),
             nn.ReLU(),
             nn.Dropout(p=0.5),
-            nn.Linear(256, 3),
+            nn.Linear(256, 4),
             nn.Softmax(dim=1),
         )
 

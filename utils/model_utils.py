@@ -239,4 +239,6 @@ def get_audio_direction(top_channel_audio, bottom_channel_audio):
     elif direction == 1:
         return "남쪽"
     elif direction == 2:
+        return "동쪽"
+    elif direction == 3:
         return "북쪽"
