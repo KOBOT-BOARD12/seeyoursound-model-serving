@@ -40,6 +40,10 @@ def inference(audio):
 ---
 ### 4. 모델 및 전처리 방법 출처
 #### [Real-Time Convolutional Neural Network-Based Speech Source Localization on Smartphone](https://ieeexplore.ieee.org/document/8910614)
+### 5. 데이터 수집
+#### 음성 분류에 사용된 데이터를 음원으로 하여 갤럭시 노트 8과 갤럭시 S21+로 네 방향에 대해 녹음을 진행했다.
+[녹음 방법](https://media.discordapp.net/attachments/363994928533078018/1148649346498310314/image.png?width=775&height=581)
+
 
 
 
