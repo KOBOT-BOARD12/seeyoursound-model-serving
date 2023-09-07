@@ -2,7 +2,7 @@
 
 ### 1. 음원 방향 추정
 
-#### 음원의 방향을 네 방향으로 추정한다.
+음원의 방향을 네 방향으로 추정한다.
 
 ---
 
@@ -43,7 +43,7 @@ Real-Time Convolutional Neural Network-Based Speech Source Localization on Smart
 def train(model, train_loader):
 ```
 
-#### 앞서 구성된 모델을 학습하며 loss가 가장 낮은 모델을 저장한다.
+앞서 구성된 모델을 학습하며 loss가 가장 낮은 모델을 저장한다.
 
 ---
 
@@ -53,17 +53,18 @@ def train(model, train_loader):
 def inference(audio):
 ```
 
-#### 음성을 전처리하고 추론한다.
+음성을 전처리하고 추론한다.
 
 ---
 
 ### 4. 모델 및 전처리 방법 출처
 
-#### [Real-Time Convolutional Neural Network-Based Speech Source Localization on Smartphone](https://ieeexplore.ieee.org/document/8910614)
+[Real-Time Convolutional Neural Network-Based Speech Source Localization on Smartphone](https://ieeexplore.ieee.org/document/8910614)
 
 ---
 
 ### 5. 데이터 수집
 
-#### 음성 분류에 사용된 데이터를 음원으로 하여 갤럭시 노트 8과 갤럭시 S21+로 네 방향에 대해 녹음을 진행했다.
+음성 분류에 사용된 데이터를 음원으로 하여 갤럭시 노트 8과 갤럭시 S21+로 네 방향에 대해 녹음을 진행했다.
+
 <img src="https://i.ibb.co/svG0d5X/recording.jpg" width="50%" height="50%">
