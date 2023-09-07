@@ -22,8 +22,7 @@ d. [One Class Classification](https://github.com/KOBOT-BOARD12/seeyoursound-mode
 
 e. [Keyword Similarity](https://github.com/KOBOT-BOARD12/seeyoursound-model-serving/tree/main/keyword_similarity): Keyword Similarity에서 사용된 모델 정보와 추론 코드가 포함되어 있다.
 
-e. [DOA Prediction](https://github.com/KOBOT-BOARD12/seeyoursound-model-serving/tree/main/DOA_Prediction): DOA Prediction에서 사용된 학습 데이터 정보, 모델 학습 코드가 포함되어 있다.
-<br>
+f. [DOA Prediction](https://github.com/KOBOT-BOARD12/seeyoursound-model-serving/tree/main/DOA_Prediction): DOA Prediction에서 사용된 학습 데이터 정보, 모델 학습 코드가 포함되어 있다.
 
 ### 4. ENV
 
@@ -41,8 +40,6 @@ CLIENT_X509_CERT_URL
 UNIVERSE_DOMAIN
 CENTRAL_SERVER_URL
 ```
-
-<br>
 
 ### 5-1. How to install (without Docker)
 
@@ -81,7 +78,6 @@ pip install -r requirements.txt
 uvicorn app:app --host=0.0.0.0 --port=8001
 ```
 
-<br>
 
 ### 5-2. How to install (with Docker)
 
