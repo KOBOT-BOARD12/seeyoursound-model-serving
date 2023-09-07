@@ -22,8 +22,7 @@ d. [One Class Classification](https://github.com/KOBOT-BOARD12/seeyoursound-mode
 
 e. [Keyword Similarity](https://github.com/KOBOT-BOARD12/seeyoursound-model-serving/tree/develop/keyword_similarity): Keyword Similarity에서 사용된 모델 정보와 추론 코드가 포함되어 있다.
 
-e. [DOA Prediction](https://github.com/KOBOT-BOARD12/seeyoursound-model-serving/tree/develop/DOA_Prediction): DOA Prediction에서 사용된 학습 데이터 정보, 모델 학습 코드가 포함되어 있다.
-<br>
+f. [DOA Prediction](https://github.com/KOBOT-BOARD12/seeyoursound-model-serving/tree/develop/DOA_Prediction): DOA Prediction에서 사용된 학습 데이터 정보, 모델 학습 코드가 포함되어 있다.
 
 ### 4. ENV
 
