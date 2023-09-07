@@ -17,7 +17,7 @@ Cuda 12.1
 
 ### 3. 파일 구조
 
-#### [train_ocsvm.ipynb](https://github.com/KOBOT-BOARD12/seeyoursound-model-serving/blob/develop/one_class_classification/train_ocsvm.ipynb)
+#### [train_ocsvm.ipynb](https://github.com/KOBOT-BOARD12/seeyoursound-model-serving/blob/main/one_class_classification/train_ocsvm.ipynb)
 
 ```python
 def feature_extraction(data_paths):
@@ -27,7 +27,7 @@ def feature_extraction(data_paths):
 
 ---
 
-#### [train_ocsvm.ipynb](https://github.com/KOBOT-BOARD12/seeyoursound-model-serving/blob/develop/one_class_classification/train_ocsvm.ipynb)
+#### [train_ocsvm.ipynb](https://github.com/KOBOT-BOARD12/seeyoursound-model-serving/blob/main/one_class_classification/train_ocsvm.ipynb)
 
 ```python
 def fit_transform_scaler(train_set, test_set):
@@ -37,7 +37,7 @@ def fit_transform_scaler(train_set, test_set):
 
 ---
 
-#### [train_ocsvm.ipynb](https://github.com/KOBOT-BOARD12/seeyoursound-model-serving/blob/develop/one_class_classification/train_ocsvm.ipynb)
+#### [train_ocsvm.ipynb](https://github.com/KOBOT-BOARD12/seeyoursound-model-serving/blob/main/one_class_classification/train_ocsvm.ipynb)
 
 ```python
 def fit_transform_pca(train_set, test_set):
@@ -47,7 +47,7 @@ def fit_transform_pca(train_set, test_set):
 
 ---
 
-#### [train_ocsvm.ipynb](https://github.com/KOBOT-BOARD12/seeyoursound-model-serving/blob/develop/one_class_classification/train_ocsvm.ipynb)
+#### [train_ocsvm.ipynb](https://github.com/KOBOT-BOARD12/seeyoursound-model-serving/blob/main/one_class_classification/train_ocsvm.ipynb)
 
 ```python
 def param_op(gamma, kernel, nu):
@@ -57,7 +57,7 @@ def param_op(gamma, kernel, nu):
 
 ---
 
-#### [inference_ocsvm.ipynb](https://github.com/KOBOT-BOARD12/seeyoursound-model-serving/blob/develop/one_class_classification/inference_ocsvm.ipynb)
+#### [inference_ocsvm.ipynb](https://github.com/KOBOT-BOARD12/seeyoursound-model-serving/blob/main/one_class_classification/inference_ocsvm.ipynb)
 
 ```python
 def model_load(ast_path, scaler_path, pca_path, ocsvm_path):
@@ -67,7 +67,7 @@ def model_load(ast_path, scaler_path, pca_path, ocsvm_path):
 
 ---
 
-#### [inference_ocsvm.ipynb](https://github.com/KOBOT-BOARD12/seeyoursound-model-serving/blob/develop/one_class_classification/inference_ocsvm.ipynb)
+#### [inference_ocsvm.ipynb](https://github.com/KOBOT-BOARD12/seeyoursound-model-serving/blob/main/one_class_classification/inference_ocsvm.ipynb)
 
 ```python
 def inference(audio, sr=16000):

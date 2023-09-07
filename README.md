@@ -12,17 +12,17 @@ Ubuntu 22.04.3, Python 3.11.1 버전에서 개발을 진행하였다.
 
 ### 3. 'SeeYourSound' 모델 백엔드의 구조
 
-a. [Manager](https://github.com/KOBOT-BOARD12/seeyoursound-model-serving/blob/develop/manager/firebase_manager.py): Manager Folder - Firebase Firestore와 연동한다.
+a. [Manager](https://github.com/KOBOT-BOARD12/seeyoursound-model-serving/blob/main/manager/firebase_manager.py): Manager Folder - Firebase Firestore와 연동한다.
 
-b. [Utils](https://github.com/KOBOT-BOARD12/seeyoursound-model-serving/tree/develop/utils): 오디오 파일 생성, 오디오 디노이징, 모델 추론 등을 진행한다.
+b. [Utils](https://github.com/KOBOT-BOARD12/seeyoursound-model-serving/tree/main/utils): 오디오 파일 생성, 오디오 디노이징, 모델 추론 등을 진행한다.
 
-c. [Sound Classification](https://github.com/KOBOT-BOARD12/seeyoursound-model-serving/tree/develop/sound_classification): Sound Classification에서 사용된 학습 데이터 정보, 모델 학습 코드가 포함되어 있다.
+c. [Sound Classification](https://github.com/KOBOT-BOARD12/seeyoursound-model-serving/tree/main/sound_classification): Sound Classification에서 사용된 학습 데이터 정보, 모델 학습 코드가 포함되어 있다.
 
-d. [One Class Classification](https://github.com/KOBOT-BOARD12/seeyoursound-model-serving/tree/develop/sound_classification): One Class Classification에서 사용된 학습 데이터 정보, 모델 학습 코드가 포함되어 있다.
+d. [One Class Classification](https://github.com/KOBOT-BOARD12/seeyoursound-model-serving/tree/main/sound_classification): One Class Classification에서 사용된 학습 데이터 정보, 모델 학습 코드가 포함되어 있다.
 
-e. [Keyword Similarity](https://github.com/KOBOT-BOARD12/seeyoursound-model-serving/tree/develop/keyword_similarity): Keyword Similarity에서 사용된 모델 정보와 추론 코드가 포함되어 있다.
+e. [Keyword Similarity](https://github.com/KOBOT-BOARD12/seeyoursound-model-serving/tree/main/keyword_similarity): Keyword Similarity에서 사용된 모델 정보와 추론 코드가 포함되어 있다.
 
-e. [DOA Prediction](https://github.com/KOBOT-BOARD12/seeyoursound-model-serving/tree/develop/DOA_Prediction): DOA Prediction에서 사용된 학습 데이터 정보, 모델 학습 코드가 포함되어 있다.
+e. [DOA Prediction](https://github.com/KOBOT-BOARD12/seeyoursound-model-serving/tree/main/DOA_Prediction): DOA Prediction에서 사용된 학습 데이터 정보, 모델 학습 코드가 포함되어 있다.
 <br>
 
 ### 4. ENV
