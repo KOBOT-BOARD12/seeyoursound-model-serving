@@ -17,7 +17,7 @@ Cuda 12.1
 
 ### 3. 파일 구조
 
-#### [keyword_similarity.ipynb](https://github.com/KOBOT-BOARD12/seeyoursound-model-serving/blob/develop/keyword_similarity/keyword_similarity.ipynb)
+#### [keyword_similarity.ipynb](https://github.com/KOBOT-BOARD12/seeyoursound-model-serving/blob/main/keyword_similarity/keyword_similarity.ipynb)
 
 ```python
 MFA2IPA: dict
@@ -27,7 +27,7 @@ MFA2IPA: dict
 
 ---
 
-#### [keyword_similarity.ipynb](https://github.com/KOBOT-BOARD12/seeyoursound-model-serving/blob/develop/keyword_similarity/keyword_similarity.ipynb)
+#### [keyword_similarity.ipynb](https://github.com/KOBOT-BOARD12/seeyoursound-model-serving/blob/main/keyword_similarity/keyword_similarity.ipynb)
 
 ```python
 def convert_to_ipa(korean_text):
@@ -37,7 +37,7 @@ def convert_to_ipa(korean_text):
 
 ---
 
-#### [keyword_similarity.ipynb](https://github.com/KOBOT-BOARD12/seeyoursound-model-serving/blob/develop/keyword_similarity/keyword_similarity.ipynb)
+#### [keyword_similarity.ipynb](https://github.com/KOBOT-BOARD12/seeyoursound-model-serving/blob/main/keyword_similarity/keyword_similarity.ipynb)
 
 ```python
 def map_to_pred(audio):
@@ -47,7 +47,7 @@ def map_to_pred(audio):
 
 ---
 
-#### [keyword_similarity.ipynb](https://github.com/KOBOT-BOARD12/seeyoursound-model-serving/blob/develop/keyword_similarity/keyword_similarity.ipynb)
+#### [keyword_similarity.ipynb](https://github.com/KOBOT-BOARD12/seeyoursound-model-serving/blob/main/keyword_similarity/keyword_similarity.ipynb)
 
 ```python
 def calculate_similarity(keyword_ipa, predicted_ipa):

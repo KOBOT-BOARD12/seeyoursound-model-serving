@@ -17,7 +17,7 @@ Cuda 11.4
 
 ### 3. 파일 구조
 
-#### [data_rename.ipynb](https://github.com/KOBOT-BOARD12/seeyoursound-model-serving/blob/develop/sound_classification/data_rename.ipynb)
+#### [data_rename.ipynb](https://github.com/KOBOT-BOARD12/seeyoursound-model-serving/blob/main/sound_classification/data_rename.ipynb)
 
 ```python
 def rename_wav_files(directory_path):
@@ -27,7 +27,7 @@ def rename_wav_files(directory_path):
 
 ---
 
-#### [sound_classification.ipynb](https://github.com/KOBOT-BOARD12/seeyoursound-model-serving/blob/develop/sound_classification/sound_classification.ipynb)
+#### [sound_classification.ipynb](https://github.com/KOBOT-BOARD12/seeyoursound-model-serving/blob/main/sound_classification/sound_classification.ipynb)
 
 ####
 
@@ -40,7 +40,7 @@ preprocess_and_split_wav 함수를 통해 모델 학습을 위한 데이터 파�
 
 ---
 
-#### [sound_classification.ipynb](https://github.com/KOBOT-BOARD12/seeyoursound-model-serving/blob/develop/sound_classification/sound_classification.ipynb)
+#### [sound_classification.ipynb](https://github.com/KOBOT-BOARD12/seeyoursound-model-serving/blob/main/sound_classification/sound_classification.ipynb)
 
 ####
 
@@ -52,7 +52,7 @@ class SoundDataset(Dataset):
 
 ---
 
-#### [sound_classification.ipynb](https://github.com/KOBOT-BOARD12/seeyoursound-model-serving/blob/develop/sound_classification/sound_classification.ipynb)
+#### [sound_classification.ipynb](https://github.com/KOBOT-BOARD12/seeyoursound-model-serving/blob/main/sound_classification/sound_classification.ipynb)
 
 ####
 
@@ -64,7 +64,7 @@ CNN을 사용한 모델 클래스이다.
 
 ---
 
-#### [sound_classification.ipynb](https://github.com/KOBOT-BOARD12/seeyoursound-model-serving/blob/develop/sound_classification/sound_classification.ipynb)
+#### [sound_classification.ipynb](https://github.com/KOBOT-BOARD12/seeyoursound-model-serving/blob/main/sound_classification/sound_classification.ipynb)
 
 ####
 

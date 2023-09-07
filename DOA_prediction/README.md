@@ -17,7 +17,7 @@ Cuda 12.1
 
 ### 3. 파일 구조
 
-#### [DOAModel_train.ipynb](https://github.com/KOBOT-BOARD12/seeyoursound-model-serving/blob/develop/DOA_prediction/DOAModel_train.ipynb)
+#### [DOAModel_train.ipynb](https://github.com/KOBOT-BOARD12/seeyoursound-model-serving/blob/main/DOA_prediction/DOAModel_train.ipynb)
 
 ```python
 class DirectionDataset(data.Dataset):
@@ -27,7 +27,7 @@ class DirectionDataset(data.Dataset):
 
 ---
 
-#### [DOAModel_train.ipynb](https://github.com/KOBOT-BOARD12/seeyoursound-model-serving/blob/develop/DOA_prediction/DOAModel_train.ipynb)
+#### [DOAModel_train.ipynb](https://github.com/KOBOT-BOARD12/seeyoursound-model-serving/blob/main/DOA_prediction/DOAModel_train.ipynb)
 
 ```python
 class DOAModel(nn.Module):
@@ -37,7 +37,7 @@ Real-Time Convolutional Neural Network-Based Speech Source Localization on Smart
 
 ---
 
-#### [DOAModel_train.ipynb](https://github.com/KOBOT-BOARD12/seeyoursound-model-serving/blob/develop/DOA_prediction/DOAModel_train.ipynb)
+#### [DOAModel_train.ipynb](https://github.com/KOBOT-BOARD12/seeyoursound-model-serving/blob/main/DOA_prediction/DOAModel_train.ipynb)
 
 ```python
 def train(model, train_loader):
@@ -47,7 +47,7 @@ def train(model, train_loader):
 
 ---
 
-#### [doa_prediction_inference.ipynb](https://github.com/KOBOT-BOARD12/seeyoursound-model-serving/blob/develop/DOA_prediction/doa_prediction_inference.ipynb)
+#### [doa_prediction_inference.ipynb](https://github.com/KOBOT-BOARD12/seeyoursound-model-serving/blob/main/DOA_prediction/doa_prediction_inference.ipynb)
 
 ```python
 def inference(audio):
